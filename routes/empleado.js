@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Empleado = require('../models/Empleado');
 
-// GET all empleados
+
 router.get('/', async (req, res) => {
     try {
         const empleados = await Empleado.find()
@@ -13,15 +13,15 @@ router.get('/', async (req, res) => {
     }
 });
 
-// GET empleado by id
+
 router.get('/:id', getEmpleado, (req, res) => {
     res.json(res.empleado);
 });
 
-// POST create new empleado
+
 router.post('/', async (req, res) => {
     try {
-        // Validate department exists
+      
         await Empleado.validateDepartment(req.body.codigo_departamento);
 
         const empleado = new Empleado({
@@ -43,7 +43,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-// PUT update empleado
+
 router.put('/:id', getEmpleado, async (req, res) => {
     try {
         if (req.body.codigo != null) {
@@ -59,7 +59,7 @@ router.put('/:id', getEmpleado, async (req, res) => {
             res.empleado.apellido2 = req.body.apellido2;
         }
         if (req.body.codigo_departamento != null) {
-            // Validate new department if provided
+            
             await Empleado.validateDepartment(req.body.codigo_departamento);
             res.empleado.codigo_departamento = req.body.codigo_departamento;
         }
@@ -75,10 +75,10 @@ router.put('/:id', getEmpleado, async (req, res) => {
     }
 });
 
-// DELETE empleado
+
 router.delete('/:id', getEmpleado, async (req, res) => {
     try {
-        // Eliminar el empleado usando el ID
+        
         await Empleado.deleteOne({ _id: req.params.id });
         
         res.json({ 
@@ -94,7 +94,7 @@ router.delete('/:id', getEmpleado, async (req, res) => {
     }
 });
 
-// Middleware para obtener empleado
+
 async function getEmpleado(req, res, next) {
     try {
         const empleado = await Empleado.findById(req.params.id).populate('codigo_departamento', 'nombre');

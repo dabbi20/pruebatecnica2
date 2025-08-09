@@ -27,7 +27,7 @@ const EmpleadoSchema = new mongoose.Schema({
     timestamps: true
 });
 
-// Custom validation to check if department exists
+
 EmpleadoSchema.statics.validateDepartment = async function(codigo_departamento) {
     try {
         const departamento = await Departamento.findOne({ codigo: codigo_departamento });

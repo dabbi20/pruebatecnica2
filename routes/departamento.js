@@ -3,7 +3,7 @@ const router = express.Router();
 const Departamento = require('../models/Departamento');
 const Empleado = require('../models/Empleado');
 
-// GET all departamentos
+
 router.get('/', async (req, res) => {
     try {
         const departamentos = await Departamento.find();
@@ -13,12 +13,12 @@ router.get('/', async (req, res) => {
     }
 });
 
-// GET departamento by codigo
+
 router.get('/:codigo', getDepartamento, (req, res) => {
     res.json(res.departamento);
 });
 
-// GET empleados by departamento
+
 router.get('/:codigo/empleados', getDepartamento, async (req, res) => {
     try {
         const empleados = await Empleado.find({ codigo_departamento: req.params.codigo }).populate('codigo_departamento', 'nombre');
@@ -32,7 +32,7 @@ router.get('/:codigo/empleados', getDepartamento, async (req, res) => {
     }
 });
 
-// POST create new departamento
+
 router.post('/', async (req, res) => {
     const departamento = new Departamento({
         codigo: req.body.codigo,
@@ -48,7 +48,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-// PUT update departamento
+
 router.put('/:codigo', getDepartamento, async (req, res) => {
     if (req.body.codigo != null) {
         res.departamento.codigo = req.body.codigo;
@@ -72,13 +72,12 @@ router.put('/:codigo', getDepartamento, async (req, res) => {
     }
 });
 
-// DELETE departamento
+
 router.delete('/:codigo', getDepartamento, async (req, res) => {
     try {
-        // Primero eliminamos el departamento
+        
         await Departamento.deleteOne({ codigo: req.params.codigo });
         
-        // Luego eliminamos todos los empleados asociados a este departamento
         await Empleado.deleteMany({ codigo_departamento: req.params.codigo });
 
         res.json({ 
@@ -94,17 +93,17 @@ router.delete('/:codigo', getDepartamento, async (req, res) => {
     }
 });
 
-// Middleware para obtener departamento
+
 async function getDepartamento(req, res, next) {
     try {
-        // Obtener el código de la URL y convertirlo a número
+        
         const codigoParam = req.params.codigo;
         console.log('Código recibido:', codigoParam);
         console.log('Tipo del código:', typeof codigoParam);
 
         let codigo;
         if (typeof codigoParam === 'string') {
-            // Si es string, intentar convertir
+           
             codigo = parseInt(codigoParam);
             console.log('Después de parseInt:', codigo);
             if (isNaN(codigo)) {
@@ -115,7 +114,7 @@ async function getDepartamento(req, res, next) {
                 });
             }
         } else if (typeof codigoParam === 'number') {
-            // Si ya es número, usar directamente
+            
             codigo = codigoParam;
             console.log('Código ya es número:', codigo);
         } else {
@@ -126,7 +125,7 @@ async function getDepartamento(req, res, next) {
             });
         }
 
-        // Buscar el departamento
+        
         console.log('Buscando departamento con código:', codigo);
         console.log('Consulta MongoDB:', { codigo });
         
