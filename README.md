@@ -1,35 +1,71 @@
 # Prueba Técnica Desarrollador MEAN - Backend
-
 ## Descripción
-Este proyecto es el backend de una aplicación que gestiona empleados y departamentos. Implementa una API RESTful utilizando Node.js, Express y MongoDB.
 
-## Requisitos
-- Node.js 14 o superior
-- MongoDB
-- npm (Node Package Manager)
+Este proyecto es un backend robusto y escalable que implementa una API RESTful para la gestión de empleados y departamentos. La aplicación está construida siguiendo las mejores prácticas de desarrollo y utiliza tecnologías modernas del ecosistema Node.js.
 
-## Instalación
-1. Clonar el repositorio
-2. Instalar dependencias:
-```bash
-npm install
-```
-3. Configurar MongoDB
-   - Por defecto se conecta a `mongodb://localhost:27017/pruebatecnica2`
-   - Puedes modificar la conexión en el archivo `server.js`
+## Tecnologías Utilizadas
 
-## Estructura del Proyecto
-```
+- **Backend**: Node.js 20.19.0
+- **Framework**: Express.js
+- **Base de Datos**: MongoDB
+- **Middleware**: CORS, dotenv
+- **Depuración**: nodemon
+- **Gestión de Paquetes**: npm
+
+## Características Principales
+
+- CRUD completo para Departamentos y Empleados
+- Validación de datos robusta
+- Manejo de errores detallado
+- Middleware personalizado para optimizar el flujo de datos
+- Consultas eficientes a MongoDB
+- Soporte para cascada de eliminación
+- Logs detallados para debugging
+
 pruebatecnica2-back/
-├── models/
-│   ├── Empleado.js
-│   └── Departamento.js
-├── routes/
-│   ├── empleado.js
-│   └── departamento.js
-├── server.js
-└── package.json
-```
+├── models/              # Modelos de datos
+│   ├── Empleado.js     # Modelo para empleados
+│   └── Departamento.js # Modelo para departamentos
+├── routes/             # Rutas de la API
+│   ├── empleado.js     # Rutas para empleados
+│   └── departamento.js # Rutas para departamentos
+├── server.js           # Configuración del servidor
+└── package.json        # Dependencias del proyecto
+
+## Endpoints Disponibles
+
+### Departamentos
+
+- `GET /api/departamento` - Obtener todos los departamentos
+- `GET /api/departamento/:codigo` - Obtener un departamento específico
+- `GET /api/departamento/:codigo/empleados` - Obtener empleados de un departamento
+- `POST /api/departamento` - Crear nuevo departamento
+- `PUT /api/departamento/:codigo` - Actualizar departamento
+- `DELETE /api/departamento/:codigo` - Eliminar departamento
+
+### Empleados
+
+- `GET /api/empleado` - Obtener todos los empleados
+- `GET /api/empleado/:id` - Obtener un empleado específico
+- `POST /api/empleado` - Crear nuevo empleado
+- `PUT /api/empleado/:id` - Actualizar empleado
+- `DELETE /api/empleado/:id` - Eliminar empleado
+
+## 🛠️ Uso de Postman
+
+1. Importar la colección de Postman
+2. Configurar las peticiones con los siguientes headers:
+   ```json
+ 
+3. Los cuerpos de las peticiones POST/PUT deben ser JSON
+
+## Notas Importantes
+
+- Los departamentos se identifican por un código numérico único
+- Los empleados tienen un código único y requieren dos apellidos
+- La eliminación de un departamento elimina automáticamente sus empleados asociados
+- Se incluyen logs detallados para debugging y monitoreo
+
 
 ## Endpoints API
 
@@ -69,32 +105,3 @@ pruebatecnica2-back/
     descripcion: String      // Descripción opcional
 }
 ```
-
-## Ejecución
-Para iniciar el servidor:
-```bash
-npm start
-```
-
-Para iniciar en modo desarrollo (con hot reload):
-```bash
-npm run dev
-```
-
-El servidor se ejecutará en `http://localhost:3000`
-
-## Estado de la API
-- CRUD completo para empleados
-- CRUD completo para departamentos
-- Relación entre empleados y departamentos
-- Manejo de errores
-- Documentación de endpoints
-
-## Tecnologías Utilizadas
-- Node.js
-- Express
-- MongoDB
-- Mongoose
-- CORS
-- dotenv
-- nodemon (para desarrollo)
