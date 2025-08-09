@@ -78,10 +78,19 @@ router.put('/:id', getEmpleado, async (req, res) => {
 // DELETE empleado
 router.delete('/:id', getEmpleado, async (req, res) => {
     try {
-        await res.empleado.remove();
-        res.json({ message: 'Empleado eliminado' });
+        // Eliminar el empleado usando el ID
+        await Empleado.deleteOne({ _id: req.params.id });
+        
+        res.json({ 
+            message: 'Empleado eliminado exitosamente',
+            id: req.params.id 
+        });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error('Error al eliminar empleado:', error);
+        res.status(500).json({ 
+            message: 'Error al eliminar empleado',
+            error: error.message 
+        });
     }
 });
 
@@ -103,5 +112,7 @@ async function getEmpleado(req, res, next) {
     }
 }
 
-module.exports = router;
-module.exports.getEmpleado = getEmpleado;
+module.exports = {
+    router,
+    getEmpleado
+};

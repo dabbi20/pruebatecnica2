@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Departamento = require('./Departamento');
 
 const EmpleadoSchema = new mongoose.Schema({
     codigo: {
@@ -28,11 +29,16 @@ const EmpleadoSchema = new mongoose.Schema({
 
 // Custom validation to check if department exists
 EmpleadoSchema.statics.validateDepartment = async function(codigo_departamento) {
-    const departamento = await Departamento.findOne({ codigo: codigo_departamento });
-    if (!departamento) {
-        throw new Error('Departamento no encontrado');
+    try {
+        const departamento = await Departamento.findOne({ codigo: codigo_departamento });
+        if (!departamento) {
+            throw new Error('Departamento no encontrado');
+        }
+        return true;
+    } catch (error) {
+        console.error('Error validando departamento:', error);
+        throw error;
     }
-    return true;
 };
 
 module.exports = mongoose.model('Empleado', EmpleadoSchema);

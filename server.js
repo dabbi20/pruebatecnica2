@@ -18,7 +18,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://david:2I6DKIwFndIqOrx
     process.exit(1);
 });
 
-// Routes
+// Routes and middleware
 const empleadoRoutes = require('./routes/empleado');
 const departamentoRoutes = require('./routes/departamento');
 
@@ -27,8 +27,8 @@ const { getEmpleado } = empleadoRoutes;
 const { getDepartamento } = departamentoRoutes;
 
 // Routes
-app.use('/api/empleado', empleadoRoutes);
-app.use('/api/departamento', departamentoRoutes);
+app.use('/api/empleado', empleadoRoutes.router);
+app.use('/api/departamento', departamentoRoutes.router);
 
 const startServer = async () => {
     const PORT = process.env.PORT || 4000;
